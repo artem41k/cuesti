@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     # my apps
-    'main',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -116,4 +116,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = 'main.User'
+AUTH_USER_MODEL = 'api.User'
