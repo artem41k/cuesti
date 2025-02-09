@@ -6,6 +6,7 @@ import uuid
 
 
 class User(AbstractUser):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     pass
 
 
@@ -35,7 +36,7 @@ class Question(models.Model):
         COLOR = 'color'
         CHOICE = 'choice'
 
-    id = models.UUIDField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     title = models.CharField(max_length=64, blank=False)
     description = models.TextField(max_length=200, blank=True)
     form = models.ForeignKey(
@@ -52,14 +53,14 @@ class Question(models.Model):
 
 
 class Submission(models.Model):
-    id = models.UUIDField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     form = models.ForeignKey(
         to=Form, related_name='submissions', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Answer(models.Model):
-    id = models.UUIDField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     question = models.ForeignKey(
         to=Question, related_name='answers', on_delete=models.CASCADE)
     submission = models.ForeignKey(
