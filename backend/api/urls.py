@@ -15,6 +15,9 @@ urlpatterns = [
 
     path('register', views.CreateUserView.as_view()),
     path('profile', views.ProfileView.as_view()),
+
+    path('forms/<str:pk>/submit', views.UserSubmitFormView.as_view()),
+    path('forms/<str:pk>', views.UserFormView.as_view()),
 ]
 
 urlpatterns += router.urls

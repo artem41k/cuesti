@@ -136,3 +136,5 @@ HTTPS = bool(int(os.getenv('HTTPS')))
 
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = HTTPS
+
+COLOR_REGEX = r'#[0-9A-F]{6}'

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from django.core.signing import b62_encode
+from datetime import datetime
 import uuid
 
 
@@ -27,6 +28,13 @@ class Form(models.Model):
             self.id = b62_encode(uuid.uuid4().int)
         super().save(*args, **kwargs)
 
+    @property
+    def time_is_out(self) -> bool:
+        now = datetime.now()
+        if self.deadline is None or now < self.deadline:
+            return False
+        return True
+
 
 class Question(models.Model):
     class Types(models.TextChoices):
@@ -45,10 +53,15 @@ class Question(models.Model):
         max_length=32, blank=False, choices=Types.choices)
     required = models.BooleanField(blank=False)
 
+    # Text
     max_length = models.PositiveIntegerField(null=True)
-    max_value = models.IntegerField(null=True)
-    min_value = models.IntegerField(null=True)
+    # Numbers
+    max_value = models.FloatField(null=True)
+    min_value = models.FloatField(null=True)
+    is_float = models.BooleanField(null=True)
+    # Regex & Color
     regex = models.CharField(max_length=256, null=True)
+    # Choices
     choices = models.JSONField(null=True)
 
 
