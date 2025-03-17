@@ -123,22 +123,11 @@ class QuestionSerializer(serializers.ModelSerializer):
         for attr in check:
             if attr not in attrs:
                 continue
-            text = attrs[attr].replace(',', '.')
             is_float = attrs['is_float'] if 'is_float' in attrs else False
-            try:
-                if is_float:
-                    _ = float(text)
-                else:
-                    if '.' in text:
-                        raise ValidationError(
-                            "%s can't be float if expected answer is not"
-                            % attr
-                        )
-                    _ = int(text)
-            except ValueError:
+            if attrs[attr] % 1 != 0 and not is_float:
                 raise ValidationError(
-                    "%s '%s' is not a valid %s"
-                    % (attr, text, "float" if is_float else "number")
+                    "%s can't be float if expected answer is not"
+                    % attr
                 )
 
     def validate(self, attrs: dict):
@@ -158,7 +147,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         else:
             question_type = attrs['question_type']
         allowed_fields = set(TYPE_FIELDS[question_type])
-        not_allowed = (attrs & POSSIBLE_FIELDS) - allowed_fields
+        not_allowed = (set(attrs) & POSSIBLE_FIELDS) - allowed_fields
 
         if len(not_allowed) != 0:
             raise ValidationError(
