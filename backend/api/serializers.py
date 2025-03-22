@@ -175,7 +175,8 @@ class UserQuestionSerializer(serializers.ModelSerializer):
 class ShortFormSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Form
-        fields = ['id', 'title', 'description', 'deadline', 'closed']
+        fields = ['id', 'title', 'description',
+                  'deadline', 'closed', 'created_at']
 
 
 class FormSerializer(serializers.ModelSerializer):
@@ -186,7 +187,7 @@ class FormSerializer(serializers.ModelSerializer):
         model = models.Form
         fields = ['id', 'title', 'description', 'questions',
                   'questions_order', 'deadline', 'closed',
-                  'submission_count']
+                  'submission_count', 'created_at']
 
     def get_submission_count(self, obj: models.Form) -> int:
         return models.Submission.objects.filter(form=obj).count()

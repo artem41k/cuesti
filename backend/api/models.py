@@ -22,6 +22,7 @@ class Form(models.Model):
     closed = models.BooleanField(default=False)
     questions_order = ArrayField(
         base_field=models.CharField(max_length=36), blank=True, default=list)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         if not self.id:

@@ -17,7 +17,8 @@ class ManageFormViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return models.Form.objects.filter(owner=self.request.user)
+        return models.Form.objects.filter(
+            owner=self.request.user).order_by('-created_at')
 
     @action(methods=['POST'], detail=True)
     def update_questions(self, request: Request, *args, **kwargs) -> Response:
