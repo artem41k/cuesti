@@ -230,8 +230,8 @@ class FormSerializer(serializers.ModelSerializer):
         questions = models.Question.objects.bulk_create(question_instances)
 
         form.questions_order = [q.id for q in questions]
-
         form.questions.set(questions)
+        form.save()
 
         return form
 
