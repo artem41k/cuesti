@@ -41,7 +41,6 @@ class Question(models.Model):
     class Types(models.TextChoices):
         TEXT = 'text'
         NUMBER = 'number'
-        REGEX = 'regex'
         COLOR = 'color'
         CHOICE = 'choice'
 
@@ -56,12 +55,12 @@ class Question(models.Model):
 
     # Text
     max_length = models.PositiveIntegerField(null=True)
+    # Text & Color
+    regex = models.CharField(max_length=256, null=True)
     # Numbers
     max_value = models.FloatField(null=True)
     min_value = models.FloatField(null=True)
     is_float = models.BooleanField(null=True)
-    # Regex & Color
-    regex = models.CharField(max_length=256, null=True)
     # Choices
     choices = models.JSONField(null=True)
 

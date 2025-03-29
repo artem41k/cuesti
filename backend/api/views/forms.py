@@ -36,10 +36,22 @@ class ManageFormViewSet(ModelViewSet):
 
     @action(detail=True)
     def submissions(self, request: Request, *args, **kwargs) -> Response:
+        """ Returns all submissions like submission object """
         form = self.get_object()
         serializer = serializers.SubmissionSerializer(
             form.submissions.all().order_by('-timestamp'), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=True)
+    def answers(self, request: Request, *args, **kwargs) -> Response:
+        """ Returns list of questions with all their answers """
+        form = self.get_object()
+        serializer = serializers.QuestionAnswersSerializer(
+            form.questions.all(), many=True)
+        data = {}
+        for question in serializer.data:
+            data[question['id']] = question['answers']
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class UserFormView(RetrieveAPIView):

@@ -58,6 +58,8 @@ class CreateAnswerSerializer(serializers.ModelSerializer):
                         "Answer exceeds max length (%d > %d) (question_id: %s)"
                         % (len(text), question.max_length, question.id)
                     )
+                if question.regex and not re.fullmatch(question.regex, text):
+                    raise ValidationError("Invalid answer")
             case types.NUMBER:
                 try:
                     if question.is_float:
@@ -85,9 +87,6 @@ class CreateAnswerSerializer(serializers.ModelSerializer):
                             "(question_id: %s)"
                         ) % (text, question.min_value, question.id)
                     )
-            case types.REGEX:
-                if not re.fullmatch(question.regex, text):
-                    raise ValidationError("Invalid answer")
             case types.COLOR:
                 if not re.fullmatch(question.regex, text):
                     raise ValidationError(settings.COLOR_REGEX)
@@ -132,15 +131,13 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs: dict):
         TYPE_FIELDS = {
-            'text': {'max_length'},
+            'text': {'max_length', 'regex'},
             'number': {'max_value', 'min_value', 'is_float'},
             'color': set(),
             'choices': {'choices'},
-            'regex': {'regex'},
         }
         POSSIBLE_FIELDS = {
-            'max_length', 'max_value', 'min_value', 'is_float',
-            'regex', 'choices'
+            'max_length', 'max_value', 'min_value', 'is_float', 'choices'
         }
         if self.instance:
             question_type = self.instance.question_type
@@ -263,9 +260,25 @@ class AnswerSerializer(CreateAnswerSerializer):
     question = ShortQuestionSerializer()
 
 
+class ShortAnswerSerializer(serializers.ModelSerializer):
+    timestamp = serializers.CharField(source='submission.timestamp')
+
+    class Meta:
+        model = models.Answer
+        fields = ['id', 'text', 'timestamp', 'submission']
+
+
 class SubmissionSerializer(serializers.ModelSerializer):
     answers = AnswerSerializer(many=True)
 
     class Meta:
         model = models.Submission
         fields = ['id', 'form', 'answers', 'timestamp']
+
+
+class QuestionAnswersSerializer(serializers.ModelSerializer):
+    answers = ShortAnswerSerializer(many=True)
+
+    class Meta:
+        model = models.Question
+        fields = ['id', 'answers']

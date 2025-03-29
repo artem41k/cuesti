@@ -14,6 +14,7 @@ router.register(
 urlpatterns = [
     path('token/refresh', views.auth.CustomTokenRefreshView.as_view()),
     path('token', views.auth.CustomTokenObtainPairView.as_view()),
+    path('logout', views.auth.LogoutView.as_view()),
 
     path('register', views.users.CreateUserView.as_view()),
     path('profile', views.users.ProfileView.as_view()),
