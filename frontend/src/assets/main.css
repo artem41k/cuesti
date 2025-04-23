@@ -1,0 +1,46 @@
+@import './base.css';
+@import 'tailwindcss';
+@import 'primeicons/primeicons.css';
+
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+  font-weight: normal;
+}
+
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+a {
+  color: var(--text-color)
+}
+
+a:hover {
+  text-decoration: dashed;
+}
+
+body {
+  display: flex;
+  justify-items: center;
+}
+
+/* Remove yellow fill on autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--color-background-mute) inset !important;
+    -webkit-text-fill-color: var(--color-text);
+}
+
+
+.p-accordioncontent-content {
+  background-color: transparent !important;
+  padding: 0 4px !important;
+}
