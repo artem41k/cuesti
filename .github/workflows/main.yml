@@ -9,7 +9,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: execute ssh commands
+      - name: pull changes & restart docker compose
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.HOST }}
@@ -17,5 +17,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            whoami
-            ls -a
+            cd ~/cuesti
+            git pull
+            docker compose up -d --build
