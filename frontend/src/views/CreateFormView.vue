@@ -131,7 +131,7 @@ const copyLink = () => {
       />
       <TransparentInput
         class="text-lg! md:text-xl!"
-        :placeholder="$t('forms.description')"
+        :placeholder="success ? '' : $t('forms.description')"
         id="formDescription"
         v-model="form.description"
         :frozen="success"

@@ -57,7 +57,7 @@ const submit = async () => {
       >
         <div class="flex justify-between gap-2">
           <h2 class="font-bold! text-lg md:text-xl">{{ question.title }}</h2>
-          <p class="text-red-700" v-if="question.required">required</p>
+          <p class="text-red-700" v-if="question.required">{{ $t('forms.required') }}</p>
         </div>
         <p class="opacity-75">{{ question.description }}</p>
         <Textarea
@@ -65,7 +65,7 @@ const submit = async () => {
           class="mt-2! w-full md:w-full -mb-2!"
           v-model="answers[question.id]"
           :id="question.id"
-          :placeholder="question.question_type"
+          :placeholder="$t(`forms.${question.question_type}`)"
           :maxlength="question.max_length ? question.max_length : ''"
           autoResize
           rows="1"
@@ -78,7 +78,7 @@ const submit = async () => {
           :min="question.min_value ? question.min_value : ''"
           :max="question.max_value ? question.max_value : ''"
           :id="question.id"
-          :placeholder="question.question_type"
+          :placeholder="$t(`forms.${question.question_type}`)"
         />
         <div class="opacity-75 ml-2!">
           <!-- Number -->

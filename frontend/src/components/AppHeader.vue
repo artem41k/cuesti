@@ -18,7 +18,7 @@ const showLocaleSwitch = ref(false);
   >
     <RouterLink to="/" class="flex items-center gap-4">
       <img src="@/assets/logo.svg" class="w-14 md:w-18" />
-      <h1 v-if="isLanding" class="text-3xl font-bold!">cuesti</h1>
+      <h1 v-if="isLanding" class="text-3xl font-bold! hidden md:inline">cuesti</h1>
     </RouterLink>
     <nav class="flex items-center gap-4 text-base md:text-[18px]">
       <div :class="`${showLocaleSwitch ? 'hidden md:block' : 'block'}`">
