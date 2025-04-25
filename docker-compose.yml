@@ -15,6 +15,7 @@ services:
     restart: unless-stopped
     env_file:
       - ./backend/.env
+      - ./.env
 
   backend:
     build:
