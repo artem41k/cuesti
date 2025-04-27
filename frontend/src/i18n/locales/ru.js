@@ -9,6 +9,7 @@ export default {
 
     copyLink: 'Ссылка',
     linkCopied: 'Ссылка скопирована',
+    downloadTable: 'Скачать таблицу',
 
     min: 'мин. {n}',
     max: 'макс. {n}',

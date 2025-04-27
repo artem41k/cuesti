@@ -85,6 +85,10 @@ const copyLink = () => {
   // toast.add({severity: 'success', summary: i18n.t('general.linkCopied'), life: 3000, styleClass: 'max-w-screen'});
 }
 
+const downloadExcel = () => {
+  window.location.href = `/api/manage/forms/${form.value.id}/excel`;
+}
+
 </script>
 <template>
   <ConfirmDialog class="mx-2!" />
@@ -99,6 +103,14 @@ const copyLink = () => {
             <p class="text-xl mt-2!">{{ form.description }}</p>
           </div>
           <div class="flex gap-1">
+            <Button
+              @click="downloadExcel"
+              class="rounded-full! flex gap-[1px] px-2! py-0! text-nowrap max-h-fit min-h-6 min-w-10"
+              severity="success"
+            >
+              <i class="pi pi-table"></i>
+              <span class="hidden md:inline">{{ $t("general.downloadTable") }}</span>
+            </Button>
             <Button
               @click="copyLink"
               class="rounded-full! flex gap-[1px] px-2! py-0! text-nowrap max-h-fit min-h-6 min-w-10"

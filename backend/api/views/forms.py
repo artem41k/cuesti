@@ -8,8 +8,9 @@ from rest_framework.exceptions import ValidationError
 from rest_framework import status
 
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 
-from api import models, serializers
+from api import models, serializers, utils
 
 
 class ManageFormViewSet(ModelViewSet):
@@ -52,6 +53,39 @@ class ManageFormViewSet(ModelViewSet):
         for question in serializer.data:
             data[question['id']] = question['answers']
         return Response(data, status=status.HTTP_200_OK)
+
+    @action(detail=True)
+    def excel(self, request: Request, *args, **kwargs) -> Response:
+        """ Returns Excel table containing all submissions """
+        form: models.Form = self.get_object()
+        questions = form.questions.all()
+
+        headers = ["ID"] + [
+            q.title for q in questions] + ["Timestamp"]
+        rows = []
+
+        sub_data = form.submissions.all().prefetch_related('answers')
+
+        for sub in sub_data:
+            row = [str(sub.pk)]
+            answers = {ans.question.pk: ans.text for ans in sub.answers.all()}
+            print(f"{answers=}")
+            for q in questions:
+                row.append(answers.get(q.pk, ''))
+            row += [str(sub.timestamp)]
+            rows.append(row)
+
+        excel_attachment = utils.to_excel_attachment(form.title, headers, rows)
+
+        response = HttpResponse(
+            excel_attachment,
+            content_type='application/vnd.openxmlformats-'
+            'officedocument.spreadsheetml.sheet'
+        )
+        filename = f'cuesti_{form.pk}.xlsx'
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+        return response
 
 
 class UserFormView(RetrieveAPIView):

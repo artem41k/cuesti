@@ -9,6 +9,7 @@ export default {
 
     copyLink: 'Copy link',
     linkCopied: 'Link has been copied',
+    downloadTable: 'Download table',
 
     min: 'min. {n}',
     max: 'max. {n}',
