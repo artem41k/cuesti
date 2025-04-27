@@ -16,7 +16,6 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
+          # probably not the best approach, but i don't want gh actions to wait for my frontend to build
           script: |
-            cd ~/cuesti
-            git pull
-            docker compose up -d --build
+            nohup bash -c 'cd ~/cuesti && git pull && docker compose up -d --build' > ~/cuesti/deploy.log 2>&1 &
