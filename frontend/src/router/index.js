@@ -6,6 +6,7 @@ import ManageFormView from "@/views/ManageFormView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import ProfileView from "@/views/ProfileView.vue";
 import RegisterView from "@/views/RegisterView.vue";
+import SubmissionView from "@/views/SubmissionView.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
@@ -14,6 +15,7 @@ const routes = [
     { path: '/register', component: RegisterView },
     { path: '/profile', component: ProfileView },
     { path: '/manage/forms/create', component: CreateFormView },
+    { path: '/manage/forms/:id/submissions/:subId', component: SubmissionView },
     { path: '/manage/forms/:id', component: ManageFormView },
     { path: '/f/:id', component: FormView },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },

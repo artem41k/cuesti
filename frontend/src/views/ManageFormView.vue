@@ -10,6 +10,8 @@ import { useConfirm, useToast } from "primevue";
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
+import AnswersView from "./AnswersView.vue";
+import SubmissionsView from "./SubmissionsView.vue";
 
 const auth = useAuth();
 const route = useRoute();
@@ -30,6 +32,13 @@ const questionTypes = [
   // TODO
   // { name: "Color", value: "color" },
 ];
+
+const sections = [
+  {name: i18n.t('forms.byQuestions'), value: 'byQuestions'},
+  {name: i18n.t('forms.bySubmissions'), value: 'bySubmissions'},
+]
+
+const currentSection = ref("byQuestions");
 
 onMounted(async () => {
   auth.fetchUser();
@@ -107,48 +116,9 @@ const copyLink = () => {
             </Button>
           </div>
         </div>
-        <div class="w-full flex flex-col gap-4">
-          <div
-            v-for="question in form.questions"
-            class="flex flex-col md:flex-row justify-between gap-2"
-          >
-            <!-- Question -->
-            <div
-              class="bg-[var(--color-background-mute)] py-2 px-4 rounded-xl w-full!"
-            >
-              <div class="flex justify-between gap-2">
-                <h2 class="font-bold! text-lg md:text-xl">{{ question.title }}</h2>
-                <p class="text-red-700" v-if="question.required">
-                  {{ $t("forms.required") }}
-                </p>
-              </div>
-              <p class="opacity-75">
-                {{ question.description }}
-              </p>
-              <Select
-                class="mt-2! w-full md:w-full"
-                :model-value="question.question_type"
-                :options="questionTypes"
-                option-label="name"
-                option-value="value"
-                disabled
-              />
-            </div>
-            <!-- Answers -->
-            <div class="w-full!">
-              <DataTable
-                table-class="rounded-xl!"
-                striped-rows
-                :value="answers[question.id]"
-                scrollable
-                scroll-height="300px"
-              >
-                <Column field="text" :header="$t('forms.answers')" />
-                <!-- <Column field="timestamp" header="Timestamp" body-class="opacity-50" /> -->
-              </DataTable>
-            </div>
-          </div>
-        </div>
+        <SelectButton size="large" :options="sections" v-model="currentSection" option-label="name" option-value="value" />
+        <AnswersView v-if="currentSection === 'byQuestions'" :form="form" />
+        <SubmissionsView v-if="currentSection === 'bySubmissions'" :form="form" />
       </div>
     </div>
   </div>

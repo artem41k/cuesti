@@ -12,6 +12,9 @@ router.register(
 
 
 urlpatterns = [
+    path('manage/forms/<str:form_pk>/submissions/<str:pk>',
+         views.submissions.SubmissionView.as_view()),
+
     path('token/refresh', views.auth.CustomTokenRefreshView.as_view()),
     path('token', views.auth.CustomTokenObtainPairView.as_view()),
     path('logout', views.auth.LogoutView.as_view()),

@@ -85,6 +85,11 @@ export const deleteFormReq = async (id) => {
     return response.data
 }
 
+export const getSubmissionReq = async (formId, id) => {
+    const response = await api.get(`/manage/forms/${formId}/submissions/${id}`);
+    return response.data
+}
+
 // User
 
 export const getFormReq = async (id) => {

@@ -15,6 +15,10 @@ export default {
     fromAToB: 'from {a} to {b}',
 
     maxChar: '@:general.max char.',
+
+    overview: 'Overview',
+    at: 'at',
+    view: 'View',
   },
   profile: {
     profile: 'Profile',
@@ -60,7 +64,10 @@ export default {
       numericAnswerType: 'Answer type',
       canBeFloat: 'Can be float number',
       regex: 'Regular expression',
-    }
+    },
+
+    byQuestions: 'By questions',
+    bySubmissions: 'By submissions',
   },
   placeholders: {
     number: 'number',

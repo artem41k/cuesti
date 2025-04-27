@@ -75,8 +75,8 @@ const submit = async () => {
           class="mt-2! w-full md:w-full"
           v-model="answers[question.id]"
           :max-fraction-digits="question.is_float ? 2 : 0"
-          :min="question.min_value ? question.min_value : ''"
-          :max="question.max_value ? question.max_value : ''"
+          :min="question.min_value ? question.min_value : undefined"
+          :max="question.max_value ? question.max_value : undefined"
           :id="question.id"
           :placeholder="$t(`forms.${question.question_type}`)"
         />

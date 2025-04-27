@@ -1,3 +1,3 @@
-from api.views import auth, forms, users
+from api.views import auth, forms, users, submissions
 
-__all__ = ['auth', 'forms', 'users']
+__all__ = ['auth', 'forms', 'users', 'submissions']

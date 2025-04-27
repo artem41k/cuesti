@@ -15,6 +15,10 @@ export default {
     fromAToB: 'от {a} до {b}',
 
     maxChar: '@:general.max симв.',
+
+    overview: 'Общий вид',
+    at: 'в',
+    view: 'Посмотреть',
   },
   profile: {
     profile: 'Профиль',
@@ -59,7 +63,10 @@ export default {
       numericAnswerType: 'Тип ответа',
       canBeFloat: 'Может быть нецелым числом',
       regex: 'Регулярное выражение',
-    }
+    },
+
+    byQuestions: 'По вопросам',
+    bySubmissions: 'По ответам',
   },
   placeholders: {
     number: 'число',
