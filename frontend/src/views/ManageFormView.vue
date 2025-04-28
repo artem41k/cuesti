@@ -23,15 +23,6 @@ const i18n = useI18n();
 const form = ref({});
 
 const answers = ref({});
-const success = ref(false);
-const err = ref("");
-
-const questionTypes = [
-  { name: i18n.t('forms.text'), value: "text" },
-  { name: i18n.t('forms.number'), value: "number" },
-  // TODO
-  // { name: "Color", value: "color" },
-];
 
 const sections = [
   {name: i18n.t('forms.byQuestions'), value: 'byQuestions'},
@@ -92,7 +83,7 @@ const downloadExcel = () => {
 </script>
 <template>
   <ConfirmDialog class="mx-2!" />
-  <div class="flex w-full">
+  <div class="flex w-full mb-8!">
     <div class="flex flex-col w-full gap-2">
       <div
         class="flex flex-col w-full! md:w-4/5 gap-4 bg-[var(--color-background-soft)] rounded-4xl px-4 py-4 md:px-8 md:py-4"

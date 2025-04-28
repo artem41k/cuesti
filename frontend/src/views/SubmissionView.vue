@@ -19,6 +19,13 @@ onMounted(async () => {
   }
 });
 
+const getAnswer = (qId) => {
+  if (!submission.value || !form.value) {
+    return null;
+  }
+  return submission.value.answers.find((ans) => ans.question.id == qId)
+}
+
 </script>
 <template>
   <div
@@ -38,9 +45,10 @@ onMounted(async () => {
           <p class="text-red-700" v-if="question.required">{{ $t('forms.required') }}</p>
         </div>
         <p class="opacity-75">{{ question.description }}</p>
-        <div class="my-2! bg-[var(--color-background-highlight)] py-2 px-4 rounded-xl">
-            <p>{{ submission.answers.find((ans) => ans.question.id == question.id)?.text }}</p>
+        <div v-if="getAnswer(question.id)" class="my-2! bg-[var(--color-background-highlight)] py-2 px-4 rounded-xl">
+            <p>{{ getAnswer(question.id)?.text }}</p>
         </div>
+        <p v-else class="opacity-50">{{ $t('forms.noAnswer') }}</p>
       </div>
     </div>
   </div>

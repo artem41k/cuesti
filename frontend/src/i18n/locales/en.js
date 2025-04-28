@@ -42,9 +42,17 @@ export default {
     notRequired: 'not required',
     selectQuestionType: 'Select question type',
 
-    text: 'Text',
-    number: 'Number',
-    color: 'Color',
+    types: {
+      text: 'Text',
+      number: 'Number',
+      color: 'Color',
+      choice: 'Choice'
+    },
+
+    choices: {
+      variant: 'Variant',
+      addVariant: 'Add variant',
+    },
 
     restrictionsLabel: 'Restrictions',
 
@@ -69,6 +77,8 @@ export default {
 
     byQuestions: 'By questions',
     bySubmissions: 'By submissions',
+
+    noAnswer: 'no answer',
   },
   placeholders: {
     number: 'number',

@@ -48,7 +48,7 @@ const submit = async () => {
   >
     <div>
       <h1 class="font-bold! text-2xl md:text-3xl mx-2!">{{ form.title }}</h1>
-      <p class="text-xl mt-2!">{{ form.description }}</p>
+      <p class="text-xl mx-2! mt-2!">{{ form.description }}</p>
     </div>
     <div v-if="!success" class="w-full flex flex-col gap-4">
       <div
@@ -65,7 +65,7 @@ const submit = async () => {
           class="mt-2! w-full md:w-full -mb-2!"
           v-model="answers[question.id]"
           :id="question.id"
-          :placeholder="$t(`forms.${question.question_type}`)"
+          :placeholder="$t(`forms.types.${question.question_type}`)"
           :maxlength="question.max_length ? question.max_length : ''"
           autoResize
           rows="1"
@@ -78,8 +78,19 @@ const submit = async () => {
           :min="question.min_value ? question.min_value : undefined"
           :max="question.max_value ? question.max_value : undefined"
           :id="question.id"
-          :placeholder="$t(`forms.${question.question_type}`)"
+          :placeholder="$t(`forms.types.${question.question_type}`)"
         />
+        <div v-if="question.question_type === 'choice'" class="mt-2! flex flex-col gap-1">
+          <div
+            v-for="choice in question.choices"
+            class="flex gap-2 rounded-xl w-full py-1 px-2 items-center cursor-pointer"
+            :class="answers[question.id] === choice.answer ? 'bg-[var(--color-background-highlight)]': ''"
+            @click="answers[question.id] = choice.answer"
+          >
+            <RadioButton @click.stop :value="choice.answer" v-model="answers[question.id]" />
+            <p>{{ choice.answer }}</p>
+          </div>
+        </div>
         <div class="opacity-75 ml-2!">
           <!-- Number -->
           <small v-if="question.max_value != null && question.min_value != null">

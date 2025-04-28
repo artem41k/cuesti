@@ -41,9 +41,17 @@ export default {
     notRequired: 'не обязательный',
     selectQuestionType: 'Выберите тип вопроса',
 
-    text: 'Текст',
-    number: 'Число',
-    color: 'Цвет',
+    types: {
+      text: 'Текст',
+      number: 'Число',
+      color: 'Цвет',
+      choice: 'Выбор из вариантов'
+    },
+
+    choices: {
+      variant: 'Вариант ответа',
+      addVariant: 'Добавить вариант ответа',
+    },
 
     restrictionsLabel: 'Ограничения',
 
@@ -68,6 +76,8 @@ export default {
 
     byQuestions: 'По вопросам',
     bySubmissions: 'По ответам',
+    
+    noAnswer: 'без ответа',
   },
   placeholders: {
     number: 'число',

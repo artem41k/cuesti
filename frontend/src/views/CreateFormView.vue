@@ -9,8 +9,13 @@ import { useI18n } from "vue-i18n";
 const auth = useAuth();
 const i18n = useI18n();
 
+const emptyChoice = {answer: '', meta: {'type': 'text'}};
+
 const form = ref({});
 const questions = ref([{ internalId: 0, required: false }]);
+const choices = ref({0: [{ ...emptyChoice }]});
+
+
 const invalid = ref({
   formTitle: false,
   titles: [],
@@ -26,11 +31,14 @@ onMounted(() => {
 })
 
 const questionTypes = [
-  { name: i18n.t('forms.text'), value: "text" },
-  { name: i18n.t('forms.number'), value: "number" },
+  { name: i18n.t('forms.types.text'), value: "text" },
+  { name: i18n.t('forms.types.number'), value: "number" },
+  { name: i18n.t('forms.types.choice'), value: "choice" },
   // TODO
   // { name: "Color", value: "color" },
 ];
+
+const restrictionsAvailable = ['text', 'number'];
 
 const validateTitle = () => {
   if (!form.value?.title) {
@@ -74,15 +82,26 @@ const formValid = computed(() => {
 
 const addQuestion = () => {
   const lastEl = questions.value.at(-1);
+  const internalId = (lastEl ? lastEl.internalId : 0) + 1
   questions.value.push({
-    internalId: (lastEl ? lastEl.internalId : 0) + 1,
+    internalId: internalId,
     required: false,
   });
+  choices.value[internalId] = [{ ...emptyChoice }];
 };
 const deleteQuestion = (dq) => {
   questions.value = questions.value.filter(
     (q) => q.internalId !== dq.internalId
   );
+  delete choices.value[dq.internalId];
+};
+
+const addChoiceVariant = (qIntId) => {
+  if (qIntId in choices.value) {
+    choices.value[qIntId].push({ ...emptyChoice });
+  } else {
+    choices.value[qIntId] = [{ ...emptyChoice }];
+  }
 };
 
 const getFullFormData = computed(() => {
@@ -91,6 +110,9 @@ const getFullFormData = computed(() => {
     // map removes internalId from question objects
     questions: questions.value.map((question) => {
       const { internalId, ...newQuestion } = question;
+      if (newQuestion.question_type === 'choice') {
+        newQuestion.choices = choices.value[internalId];
+      }
       return newQuestion;
     }),
   };
@@ -194,7 +216,19 @@ const copyLink = () => {
           :invalid="question.internalId in invalid.types"
           class="py-0!"
         />
-        <Accordion v-if="question?.question_type && question?.question_type !== 'color'" value="0">
+        <div v-if="question?.question_type === 'choice'" class="flex flex-col gap-2">
+          <div v-for="(choice, index) in choices[question.internalId]" class="flex justify-between bg-[var(--color-background-highlight)] rounded-xl w-full py-1 px-2 items-center">
+            <TransparentInput
+              :placeholder="$t('forms.choices.variant') + ' ' + (index+1)"
+              v-model="choice.answer"
+            />
+            <i @click="choices[question.internalId].splice(index, 1)" class="pi pi-trash mr-1! cursor-pointer"></i>
+          </div>
+          <div @click="addChoiceVariant(question.internalId)" class="flex px-4 cursor-pointer">
+            <p>{{ $t('forms.choices.addVariant') }} +</p>
+          </div>
+        </div>
+        <Accordion v-if="question?.question_type && restrictionsAvailable.includes(question.question_type)" value="0">
           <AccordionPanel class="border-none!">
             <AccordionHeader
               class="bg-transparent! py-0! px-2! gap-2! justify-start!"

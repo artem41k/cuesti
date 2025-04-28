@@ -23,7 +23,7 @@ There are two groups of fields. First one contains main fields and the second on
 
 `max_value` and `min_value` - have to be integers if `is_float` is `False` or `None` and floats otherwise
 
-`choices` - JSON structure where keys are possible answer values and values are structures with display data (like `type`, `filename`, etc.)
+`choices` - JSON list with objects like {"answer": "...", "meta": {...}} where meta is some display data (like `type`, `filename`, etc.)
 
 
 ## Auth

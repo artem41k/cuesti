@@ -91,7 +91,8 @@ class CreateAnswerSerializer(serializers.ModelSerializer):
                 if not re.fullmatch(question.regex, text):
                     raise ValidationError(settings.COLOR_REGEX)
             case types.CHOICE:
-                if question.choices and text not in question.choices:
+                possible_answers = [v['answer'] for v in question.choices]
+                if text not in possible_answers:
                     raise ValidationError(
                         "Answer is not in list of possible values")
 
@@ -134,7 +135,7 @@ class QuestionSerializer(serializers.ModelSerializer):
             'text': {'max_length', 'regex'},
             'number': {'max_value', 'min_value', 'is_float'},
             'color': set(),
-            'choices': {'choices'},
+            'choice': {'choices'},
         }
         POSSIBLE_FIELDS = {
             'max_length', 'max_value', 'min_value', 'is_float', 'choices'
@@ -153,6 +154,11 @@ class QuestionSerializer(serializers.ModelSerializer):
 
         if question_type == 'number':
             self.validate_min_and_max_values(attrs)
+
+        if question_type == 'choice' and 'choices' not in attrs:
+            raise ValidationError(
+                "Choices must be provided for question with type 'choice'"
+            )
 
         return super().validate(attrs)
 
