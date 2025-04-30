@@ -33,6 +33,8 @@ export default {
     answers: 'Answers',
     questionsNumber: 'no questions | {n} question | {n} questions',
     submissionsNumber: '{n} submissions | {n} submission | {n} submissions',
+    answersNumber: 'no answers | {n} answer | {n} answers',
+
     active: 'Active',
     closed: 'Closed',
 
@@ -79,6 +81,8 @@ export default {
     bySubmissions: 'By submissions',
 
     noAnswer: 'no answer',
+
+    averageValue: 'Average value',
   },
   placeholders: {
     number: 'number',

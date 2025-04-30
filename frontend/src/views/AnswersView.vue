@@ -2,7 +2,7 @@
 import {
   getFormQuestionsWithAnswersReq,
 } from "@/services/api";
-import { darkenHexColor, darkenHslColor, getCurrentMode, shuffleArray } from "@/services/utils";
+import { darkenHexColor, darkenHslColor, getCurrentMode, shuffleArray, sumArray } from "@/services/utils";
 import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
@@ -98,6 +98,11 @@ const getChartData = (input) => {
   return chartData
 }
 
+const getAnswersAverage = (answers) => {
+  if (!answers) { return; }
+  return Math.round((sumArray(answers.map((aData) => Number.parseFloat(aData?.text))) / answers?.length) * 100) / 100;
+}
+
 </script>
 <template>
   <div class="w-full flex flex-col gap-4">
@@ -126,6 +131,11 @@ const getChartData = (input) => {
           option-value="value"
           disabled
         />
+        <!-- Info -->
+        <div class="mt-2!">
+          <p>{{ $t('forms.answersNumber', answers[question.id]?.length) }}</p>
+          <p v-if="question.question_type === 'number'">{{ $t('forms.averageValue') }}: {{ getAnswersAverage(answers[question.id]) }}</p>
+        </div>
       </div>
       <!-- Answers -->
       <div class="w-full! flex justify-center">

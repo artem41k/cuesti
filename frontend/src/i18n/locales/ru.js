@@ -32,6 +32,7 @@ export default {
     answers: 'Ответы',
     questionsNumber: '0 вопросов | {n} вопрос | {n} вопроса | {n} вопросов',
     submissionsNumber: '0 ответов | {n} ответ | {n} ответа | {n} ответов',
+    answersNumber: 'нет ответов | {n} ответ | {n} ответа | {n} ответов',
     active: 'Активна',
     closed: 'Закрыта',
 
@@ -78,6 +79,8 @@ export default {
     bySubmissions: 'По ответам',
     
     noAnswer: 'без ответа',
+
+    averageValue: 'Среднее значение',
   },
   placeholders: {
     number: 'число',
