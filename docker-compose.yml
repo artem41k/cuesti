@@ -25,6 +25,7 @@ services:
         condition: service_healthy
     env_file:
       - ./backend/.env
+      - ./.env
 
   frontend:
     build:

@@ -36,6 +36,9 @@ class Form(models.Model):
             return False
         return True
 
+    def __str__(self):
+        return self.title
+
 
 class Question(models.Model):
     class Types(models.TextChoices):

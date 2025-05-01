@@ -26,12 +26,16 @@ CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
+    # admin page customization
+    'jazzmin',
+    # default apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # custom apps
     'rest_framework',
     'corsheaders',
     # my apps
@@ -145,13 +149,31 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1)
 }
 
+JAZZMIN_SETTINGS = {
+    "site_title": "cuesti admin",
+    "site_header": "cuesti admin",
+    "site_brand": "cuesti",
+    "welcome_sign": "Welcome to the cuesti admin panel!",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+
+    "search_model": ["api.User", "api.Form"],
+    "hide_models": ["auth.Group"],
+}
+
+
+# Security
 
 HTTPS = bool(int(os.getenv('HTTPS')))
 
+SECURE_SSL_REDIRECT = HTTPS
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = HTTPS
 
-COLOR_REGEX = r'#[0-9A-F]{6}'
+ADMIN_ROUTE = os.getenv('ADMIN_ROUTE', 'admin')
 
+# Custom settings
+
+COLOR_REGEX = r'#[0-9A-F]{6}'
 
 EXCEL_MAX_COLUMN_WIDTH = 50
