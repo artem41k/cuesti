@@ -1,5 +1,5 @@
 <script setup>
-import { getFormReq, getSubmissionReq } from "@/services/api";
+import { getFormReq, getManagedFormReq, getSubmissionReq } from "@/services/api";
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -10,7 +10,7 @@ const route = useRoute();
 
 onMounted(async () => {
   try {
-    const formData = await getFormReq(route.params.id);
+    const formData = await getManagedFormReq(route.params.id);
     form.value = formData;
     const submissionData = await getSubmissionReq(route.params.id, route.params.subId);
     submission.value = submissionData;

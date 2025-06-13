@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from django.core.signing import b62_encode
-from datetime import datetime
+from django.utils import timezone
 import uuid
 
 
@@ -31,7 +31,7 @@ class Form(models.Model):
 
     @property
     def time_is_out(self) -> bool:
-        now = datetime.now()
+        now = timezone.now()
         if self.deadline is None or now < self.deadline:
             return False
         return True

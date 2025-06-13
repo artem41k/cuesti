@@ -85,6 +85,11 @@ export const deleteFormReq = async (id) => {
     return response.data
 }
 
+export const closeFormReq = async (id) => {
+    const response = await api.post(`/manage/forms/${id}/close`);
+    return response.data
+}
+
 export const getSubmissionReq = async (formId, id) => {
     const response = await api.get(`/manage/forms/${formId}/submissions/${id}`);
     return response.data

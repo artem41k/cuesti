@@ -20,6 +20,8 @@ export default {
     overview: 'Overview',
     at: 'at',
     view: 'View',
+
+    irreversible: 'This action is irreversible',
   },
   profile: {
     profile: 'Profile',
@@ -37,6 +39,12 @@ export default {
 
     active: 'Active',
     closed: 'Closed',
+
+    close: 'Close',
+    closeForm: 'Close form',
+    closeFormConfirm: 'Are you sure you want to close this form? New submissions will be impossible.',
+
+    closedMessage: 'This form is closed. New submissions are impossible.',
 
     title: 'Title',
     description: 'Description',
@@ -61,7 +69,7 @@ export default {
     addQuestion: 'Add question',
     delete: 'Delete Form',
 
-    confirmDelete: 'Are you sure you want to delete this form? You will lost all submissions',
+    confirmDelete: 'Are you sure you want to delete this form? You will lose all submissions. Maybe you want to close it instead?',
 
     formSuccessfullyCreated: 'Form has been successfully created!',
     nowYouCanShareViaLink: 'Now you can share it using link',

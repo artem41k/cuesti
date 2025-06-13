@@ -35,6 +35,14 @@ class ManageFormViewSet(ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @action(methods=['POST'], detail=True)
+    def close(self, request: Request, *args, **kwargs) -> Response:
+        form = self.get_object()
+        if not form.closed:
+            form.closed = True
+            form.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     @action(detail=True)
     def submissions(self, request: Request, *args, **kwargs) -> Response:
         """ Returns all submissions like submission object """
